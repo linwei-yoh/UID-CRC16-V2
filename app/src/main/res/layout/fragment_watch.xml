@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_watch"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="horizontal"
+    tools:context="com.example.android.uid_database.WatchActivityFragment"
+    tools:showIn="@layout/activity_watch">
+
+    <ListView
+        android:id="@+id/uid_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="1dp"
+        android:divider="#000"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listview_empty"
+        android:text="@string/empty_forecast_list"
+        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif"
+        android:textAppearance="?android:textAppearanceMedium"/>
+
+
+</LinearLayout>

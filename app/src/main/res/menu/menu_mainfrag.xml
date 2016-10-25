@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/updata_Page"
+        android:orderInCategory="1"
+        android:title="@string/updata_Setting"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/watch_Page"
+        android:orderInCategory="2"
+        android:title="@string/watch_Setting"
+        app:showAsAction="never"/>
+
+    <group android:checkableBehavior="all"
+        android:id="@+id/switch_val">
+        <item
+            android:id="@+id/switch_sta"
+            android:orderInCategory="3"
+            android:title="@string/switch_Setting"
+            app:showAsAction="never"/>
+    </group>
+
+</menu>
