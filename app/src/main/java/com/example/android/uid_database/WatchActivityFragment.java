@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -42,11 +42,13 @@ public class WatchActivityFragment extends Fragment implements LoaderManager.Loa
     private static final String[] UID_COLUMNS = {
             UidContract.UidStore.TABLE_NAME + "." + UidContract.UidStore._ID,
             UidContract.UidStore.COLUMN_DATE,
-            UidContract.UidStore.COLUMN_UID
+            UidContract.UidStore.COLUMN_UID,
+            UidContract.UidStore.COLUMN_PW
     };
 
     static final int COL_DATE = 1;
     static final int COL_UID = 2;
+    static final int COL_PW = 3;
 
     private ShareActionProvider mShareActionProvider;
     private String ShareUid = "";
@@ -157,11 +159,10 @@ public class WatchActivityFragment extends Fragment implements LoaderManager.Loa
         mUidAdapter.swapCursor(data);
 
         if(data!=null&&data.moveToFirst()){
-            ShareUid += data.getString(COL_UID);
+            ShareUid += data.getString(COL_UID) + "  " + data.getString(COL_PW);
             while (data.moveToNext()){
-                ShareUid += "\n" + data.getString(COL_UID);
+                ShareUid += "\n" + data.getString(COL_UID) + "  " + data.getString(COL_PW);
             }
-
         }
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());

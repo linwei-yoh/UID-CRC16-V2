@@ -35,6 +35,7 @@ public class UidContract {
 
         public final static String COLUMN_UID = "uid";
         public final static String COLUMN_DATE = "date";
+        public final static String COLUMN_PW = "pw";
 
         public static Uri buildUidUri(){
             return CONTENT_URI.buildUpon().build();

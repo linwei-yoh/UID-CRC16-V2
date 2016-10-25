@@ -6,7 +6,6 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -27,6 +26,8 @@ public class UidAdapter extends CursorAdapter {
         TextView uid_date;
         @BindView(R.id.uid_val)
         TextView uid_val;
+        @BindView(R.id.uid_pw)
+        TextView uid_pw;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -48,7 +49,9 @@ public class UidAdapter extends CursorAdapter {
 
         String Date = cursor.getString(WatchActivityFragment.COL_DATE);
         String Uid = cursor.getString(WatchActivityFragment.COL_UID).trim();
+        String Pw = cursor.getString(WatchActivityFragment.COL_PW);
         viewHolder.uid_date.setText(Date);
         viewHolder.uid_val.setText(Uid);
+        viewHolder.uid_pw.setText(Pw);
     }
 }

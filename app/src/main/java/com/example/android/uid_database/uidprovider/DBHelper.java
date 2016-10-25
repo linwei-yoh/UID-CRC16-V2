@@ -20,7 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String SQL_CREATE_TABLE = "CREATE TABLE " + UidStore.TABLE_NAME + " (" +
                 UidStore._ID + " INTEGER PRIMARY KEY," +
                 UidStore.COLUMN_DATE + " TEXT," +
-                UidStore.COLUMN_UID + " TEXT NOT NULL UNIQUE ON CONFLICT IGNORE" + ");";
+                UidStore.COLUMN_UID + " TEXT NOT NULL UNIQUE ON CONFLICT IGNORE," +
+                UidStore.COLUMN_PW + " TEXT NOT NULL" + ");";
         return SQL_CREATE_TABLE;
     }
 

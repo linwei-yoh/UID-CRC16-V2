@@ -24,4 +24,5 @@
     <string name="empty_forecast_list">数据为空</string>
     <string name="item_copy">复制</string>
     <string name="item_del">删除</string>
+    <string name="addcv">添加</string>
 </resources>
