@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.android.uid_database.R.id.result;
-import static java.security.AccessController.getContext;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -53,6 +52,8 @@ public class MainActivityFragment extends Fragment {
     static final int COL_PW = 2;
 
     private String Enc_val = "";
+    private String sUidStoreWithUidSel =
+            UidContract.UidStore.TABLE_NAME + "." + UidContract.UidStore.COLUMN_UID + " = ? ";
 
     public MainActivityFragment() {
     }
@@ -87,8 +88,23 @@ public class MainActivityFragment extends Fragment {
         Output_result.setText(String.valueOf(result));
         Enc_val = String.valueOf(Utility.Enc_fun(result));
         Clipboard.setText(input_uid.trim() + "  " + Enc_val);
+
+        Cursor cs = getContext().getContentResolver().query(
+                UidContract.UidStore.CONTENT_URI,
+                UID_COLUMNS,
+                sUidStoreWithUidSel,
+                new String[]{input_uid},
+                null);
+        if (cs != null && cs.moveToFirst()) {
+            Add_DB.setBackgroundResource(R.drawable.uid_exist);
+        } else {
+            Add_DB.setBackgroundResource(R.drawable.uid_new);
+        }
+
     }
 
+    @BindView(R.id.add_db)
+    Button Add_DB;
     @OnClick(R.id.add_db)
     public void btnAddClick() {
         if (Input_Uid.getText().toString().trim().equals(""))
@@ -96,10 +112,11 @@ public class MainActivityFragment extends Fragment {
         if (Clipboard.getText().toString().equals(""))
             return;
 
-        String UidVal = Input_Uid.getText().toString();
+        ContentValues cv = new ContentValues();
+        String UidVal = Input_Uid.getText().toString().trim();
 
-        String sUidStoreWithUidSel =
-                UidContract.UidStore.TABLE_NAME + "." + UidContract.UidStore.COLUMN_UID + " = ? ";
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
+        String date = sDateFormat.format(new java.util.Date());
 
         Cursor cs = getContext().getContentResolver().query(
                 UidContract.UidStore.CONTENT_URI,
@@ -108,23 +125,19 @@ public class MainActivityFragment extends Fragment {
                 new String[]{UidVal},
                 null);
 
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
-        String date = sDateFormat.format(new java.util.Date());
-
-        ContentValues cv = new ContentValues();
         if (cs != null && cs.moveToFirst()) {
             //UID已经存在则用update
             cv.put(UidContract.UidStore.COLUMN_DATE, date);
             cv.put(UidContract.UidStore.COLUMN_PW, Enc_val);
-            mQueryHandler.startUpdate(UPDATE_TOKEN, null
-                    , UidContract.UidStore.CONTENT_URI,
+            mQueryHandler.startUpdate(UPDATE_TOKEN, null,
+                    UidContract.UidStore.CONTENT_URI,
                     cv,
                     sUidStoreWithUidSel,
                     new String[]{UidVal});
         } else {
             //不存在则用insert
             cv.put(UidContract.UidStore.COLUMN_DATE, date);
-            cv.put(UidContract.UidStore.COLUMN_UID, Input_Uid.getText().toString());
+            cv.put(UidContract.UidStore.COLUMN_UID, UidVal);
             cv.put(UidContract.UidStore.COLUMN_PW, Enc_val);
             mQueryHandler.startInsert(INSERT_TOKEN, null, UidContract.UidStore.CONTENT_URI, cv);
         }
@@ -149,6 +162,7 @@ public class MainActivityFragment extends Fragment {
                 Output_result.setText("");
                 Clipboard.setText("");
                 Enc_val = "";
+                Add_DB.setBackgroundResource(R.drawable.btn_default);
             }
 
             @Override

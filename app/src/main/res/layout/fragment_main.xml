@@ -27,6 +27,7 @@
         android:hint="@string/inputhint"
         android:inputType="textNoSuggestions"
         android:selectAllOnFocus="true"
+        android:lines="1"
         android:maxLines="1"/>
 
     <TextView
@@ -86,6 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_default"
             android:text="@string/addcv"/>
 
         <Button
@@ -94,6 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_default"
             android:text="@string/btncal"/>
 
     </LinearLayout>
