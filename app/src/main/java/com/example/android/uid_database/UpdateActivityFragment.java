@@ -14,8 +14,6 @@ import com.example.android.uid_database.uidprovider.UidContract;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,22 +41,19 @@ public class UpdateActivityFragment extends Fragment {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
         String date = sDateFormat.format(new java.util.Date());
 
-        String pattern = "(.*?)\\s+(\\d+)\\b";
-        Pattern r = Pattern.compile(pattern);
-
         ArrayList<ContentValues> mAC = new ArrayList<>();
         for (int i = 0; i < UidList.length; i++) {
-            String item = UidList[i].trim();
+            String item = UidList[i].trim().toUpperCase();
             if (item.equals(""))
                 continue;
-            Matcher m = r.matcher(item);
-            if (m.find()) {
-                ContentValues cv = new ContentValues();
-                cv.put(UidContract.UidStore.COLUMN_UID, m.group(1));
-                cv.put(UidContract.UidStore.COLUMN_DATE, date);
-                cv.put(UidContract.UidStore.COLUMN_PW, m.group(2));
-                mAC.add(cv);
-            }
+
+            String strCal = Utility.EncryptInput(item);
+            int result = Utility.CRC16(strCal.getBytes());
+            ContentValues cv = new ContentValues();
+            cv.put(UidContract.UidStore.COLUMN_DATE, date);
+            cv.put(UidContract.UidStore.COLUMN_UID, item);
+            cv.put(UidContract.UidStore.COLUMN_PW, String.valueOf(Utility.Enc_fun(result)));
+            mAC.add(cv);
         }
         ContentValues[] UidContents = new ContentValues[mAC.size()];
         mAC.toArray(UidContents);

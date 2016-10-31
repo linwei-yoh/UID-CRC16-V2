@@ -34,6 +34,15 @@ public class Utility {
         return value;
     }
 
+    public static String EncryptInput(String input) {
+        if (input.length() < 16) {
+            input = addZeroForNum(input, 16);
+        }
+
+        input = "WZ" + input.substring(2, input.length() - 2) + "YK";
+        return input;
+    }
+
     public static int CRC16(byte[] Buf) {
         int CRC;
         int i, Temp, Len;

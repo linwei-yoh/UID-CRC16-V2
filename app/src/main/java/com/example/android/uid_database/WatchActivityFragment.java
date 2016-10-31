@@ -85,7 +85,7 @@ public class WatchActivityFragment extends Fragment implements LoaderManager.Loa
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        String uid, pw;
+        String uid;
         Cursor elem = (Cursor) mUidAdapter.getItem(info.position);
 
         switch (item.getItemId()){
@@ -159,9 +159,9 @@ public class WatchActivityFragment extends Fragment implements LoaderManager.Loa
         mUidAdapter.swapCursor(data);
 
         if(data!=null&&data.moveToFirst()){
-            ShareUid += data.getString(COL_UID) + "  " + data.getString(COL_PW);
+            ShareUid += data.getString(COL_UID) + "," + data.getString(COL_PW);
             while (data.moveToNext()){
-                ShareUid += "\n" + data.getString(COL_UID) + "  " + data.getString(COL_PW);
+                ShareUid += "\n" + data.getString(COL_UID) + "," + data.getString(COL_PW);
             }
         }
         if (mShareActionProvider != null) {

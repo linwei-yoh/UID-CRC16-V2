@@ -70,21 +70,17 @@ public class MainActivityFragment extends Fragment {
     Button Btncal;
     @OnClick(R.id.calculate)
     public void btnClick(){
-        String strCal;
-        String input_uid = Input_Uid.getText().toString().trim();
 
+        String input_uid = Input_Uid.getText().toString().trim().toUpperCase();
         if(input_uid.equals("")){
             Output_result.setText("");
             Clipboard.setText("");
             return;
         }
-        if(input_uid.length() != 16){
-            strCal = Utility.addZeroForNum(input_uid,16);
-        }
-        strCal = "wz" + input_uid.substring(2,input_uid.length()-2) + "yk";
-        strCal = input_uid.toUpperCase();
 
+        String strCal = Utility.EncryptInput(input_uid);
         int result = Utility.CRC16(strCal.getBytes());
+
         Output_result.setText(String.valueOf(result));
         Enc_val = String.valueOf(Utility.Enc_fun(result));
         Clipboard.setText(input_uid.trim() + "  " + Enc_val);
@@ -97,8 +93,10 @@ public class MainActivityFragment extends Fragment {
                 null);
         if (cs != null && cs.moveToFirst()) {
             Add_DB.setBackgroundResource(R.drawable.uid_exist);
+            Add_DB.setText("更新");
         } else {
             Add_DB.setBackgroundResource(R.drawable.uid_new);
+            Add_DB.setText("添加");
         }
 
     }
@@ -163,6 +161,7 @@ public class MainActivityFragment extends Fragment {
                 Clipboard.setText("");
                 Enc_val = "";
                 Add_DB.setBackgroundResource(R.drawable.btn_default);
+                Add_DB.setText("添加");
             }
 
             @Override
